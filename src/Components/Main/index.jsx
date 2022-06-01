@@ -110,15 +110,14 @@ const Main = () => {
         setTestCompleted(false);
     };
 
+    /**
+     * @abstract to be attention to implement auto sroll
+     */
+
     const handleScroll = () => {
-        console.log(scrollPos);
         document.getElementById("term-box").scrollTo(scrollPos - scrollPos, scrollPos);
         setScrollPos((prev) => prev + 30);
     };
-
-    useEffect(() => {
-        console.log(termsStatus);
-    }, [termsStatus]);
 
     return (
         <div className="m-10">
