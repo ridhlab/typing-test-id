@@ -64,7 +64,8 @@ const Main = () => {
         if (!isStart) {
             return;
         } else {
-            if (e.keyCode === 32) {
+            const keyCodeSpace = e.keyCode || e.which;
+            if (keyCodeSpace === 32) {
                 if (inputValue === " ") {
                     setInputValue("");
                     setTrueTermCorrect();
