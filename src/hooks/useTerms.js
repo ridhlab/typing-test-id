@@ -87,7 +87,7 @@ const useTerms = () => {
             let arr = content.trim().split("\n");
             arr = arr
                 .map((term) => {
-                    return term.slice(0, -1);
+                    return term.replace(/(\r\n|\n|\r)/gm, "");
                 })
                 .filter((term) => {
                     return !/-/.test(term);
