@@ -79,7 +79,6 @@ const useTerms = () => {
         if (terms.length !== 0) {
             setTermSelected(terms[0]);
             setIndexTermSelected(0);
-            console.log(terms);
         }
     }, [terms]);
 
