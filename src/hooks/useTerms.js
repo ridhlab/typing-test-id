@@ -7,6 +7,8 @@ const useTerms = () => {
 
     const [terms, setTerms] = useState([]);
 
+    const [termsStatus, setTermsStatus] = useState([]);
+
     const [termSelected, setTermSelected] = useState("");
 
     const [indexTermSelected, setIndexTermSelected] = useState("");
@@ -36,6 +38,13 @@ const useTerms = () => {
     };
 
     const nextTerm = () => {
+        setTermsStatus((prev) => {
+            if (prev.length === 0) {
+                return [{ term: terms[indexTermSelected], status: isTermCorrect }];
+            } else {
+                return [...prev, { term: terms[indexTermSelected], status: isTermCorrect }];
+            }
+        });
         setTermSelected(terms[indexTermSelected + 1]);
         setIndexTermSelected((prevState) => prevState + 1);
     };
@@ -74,6 +83,8 @@ const useTerms = () => {
         countTermIncorrect,
         incCountTermCorrect,
         incCountTermIncorrect,
+        indexTermSelected,
+        termsStatus,
     };
 };
 
