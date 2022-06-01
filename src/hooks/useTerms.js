@@ -19,6 +19,8 @@ const useTerms = () => {
 
     const [countTermIncorrect, setCountTermIncorrect] = useState(0);
 
+    const [wpm, setWpm] = useState(null);
+
     const setFalseTermCorrect = () => setIsTermCorrect(false);
 
     const setTrueTermCorrect = () => setIsTermCorrect(true);
@@ -33,6 +35,16 @@ const useTerms = () => {
         return fileContent;
     };
 
+    const reset = () => {
+        randomizeTerms();
+        setTermsStatus([]);
+        setTermSelected("");
+        setIndexTermSelected("");
+        setCountTermCorrect(0);
+        setCountTermIncorrect(0);
+        setWpm(null);
+    };
+
     const randomizeTerms = () => {
         setTerms(getShuffledArr(terms));
     };
@@ -40,13 +52,27 @@ const useTerms = () => {
     const nextTerm = () => {
         setTermsStatus((prev) => {
             if (prev.length === 0) {
-                return [{ term: terms[indexTermSelected], status: isTermCorrect }];
+                return [{ term: terms[indexTermSelected], status: isTermCorrect, length: terms[indexTermSelected].length }];
             } else {
-                return [...prev, { term: terms[indexTermSelected], status: isTermCorrect }];
+                return [...prev, { term: terms[indexTermSelected], status: isTermCorrect, length: terms[indexTermSelected].length }];
             }
         });
         setTermSelected(terms[indexTermSelected + 1]);
         setIndexTermSelected((prevState) => prevState + 1);
+    };
+
+    const getCountChar = (arr) => {
+        let res = 0;
+        for (let i = 0; i < arr.length; i++) {
+            res += arr[i].length;
+        }
+        return res;
+    };
+
+    const calculateWpm = (terms) => {
+        const countCharTrue = getCountChar(terms.filter((term) => term.status));
+        const resWpm = countCharTrue / 5;
+        setWpm(resWpm);
     };
 
     useEffect(() => {
@@ -65,6 +91,9 @@ const useTerms = () => {
                 })
                 .filter((term) => {
                     return !/-/.test(term);
+                })
+                .filter((term) => {
+                    return term.length < 8;
                 });
             setOriginalTerms(arr);
             setTerms(getShuffledArr(arr));
@@ -85,6 +114,9 @@ const useTerms = () => {
         incCountTermIncorrect,
         indexTermSelected,
         termsStatus,
+        reset,
+        calculateWpm,
+        wpm,
     };
 };
 
