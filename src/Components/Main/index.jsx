@@ -120,10 +120,6 @@ const Main = () => {
         setScrollPos((prev) => prev + 30);
     };
 
-    useEffect(() => {
-        console.log(termSelected);
-    }, [termSelected]);
-
     return (
         <div className="m-10">
             <div className="my-4">
