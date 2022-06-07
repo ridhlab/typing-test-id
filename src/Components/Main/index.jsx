@@ -109,6 +109,7 @@ const Main = () => {
         setInputValue("");
         setIsReset(true);
         setTestCompleted(false);
+        setTrueTermCorrect();
     };
 
     /**
@@ -132,7 +133,7 @@ const Main = () => {
                     autoComplete="off"
                 />
             </div>
-            <div className="h-[15rem] border-2 text-xs p-2 overflow-y-scroll flex flex-wrap mb-4" id="term-box">
+            <div className="h-[15rem] border-2 text-xl p-2 overflow-y-scroll flex flex-wrap mb-4" id="term-box">
                 {terms?.map((term, idx) => {
                     return (
                         <span

@@ -52,9 +52,22 @@ const useTerms = () => {
     const nextTerm = () => {
         setTermsStatus((prev) => {
             if (prev.length === 0) {
-                return [{ term: terms[indexTermSelected], status: isTermCorrect, length: terms[indexTermSelected].length }];
+                return [
+                    {
+                        term: terms[indexTermSelected],
+                        status: isTermCorrect,
+                        length: terms[indexTermSelected].length,
+                    },
+                ];
             } else {
-                return [...prev, { term: terms[indexTermSelected], status: isTermCorrect, length: terms[indexTermSelected].length }];
+                return [
+                    ...prev,
+                    {
+                        term: terms[indexTermSelected],
+                        status: isTermCorrect,
+                        length: terms[indexTermSelected].length,
+                    },
+                ];
             }
         });
         setTermSelected(terms[indexTermSelected + 1]);
