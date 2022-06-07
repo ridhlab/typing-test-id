@@ -109,6 +109,7 @@ const Main = () => {
         setInputValue("");
         setIsReset(true);
         setTestCompleted(false);
+        setTrueTermCorrect();
     };
 
     /**
