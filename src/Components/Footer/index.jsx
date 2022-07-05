@@ -13,7 +13,7 @@ const Footer = () => {
                     src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png"
                 />{" "}
                 by{" "}
-                <a href="https://www.github.com/ridlwan17" target="_blank" rel="noreferrer" className="text-sky-400">
+                <a href="https://www.github.com/ridhlab" target="_blank" rel="noreferrer" className="text-sky-400">
                     Muhammad Ridwan
                 </a>{" "}
             </p>
