@@ -19,7 +19,7 @@ const Footer = () => {
             </p>
             <p>
                 View{" "}
-                <a href="https://www.github.com/ridlwan17/typing-test-id" target="_blank" rel="noreferrer" className="text-sky-400">
+                <a href="https://www.github.com/ridhlab/typing-test-id" target="_blank" rel="noreferrer" className="text-sky-400">
                     sourcecode
                 </a>
             </p>
