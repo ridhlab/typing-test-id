@@ -1,55 +1,60 @@
+import fs from "fs";
 import { useState, useEffect } from "react";
 import TermsList from "../data/terms.txt";
 import { getShuffledArr } from "../utils/Array";
 
+interface TermsStatus {
+    term: string;
+    status: boolean;
+    length: number;
+}
+
 const useTerms = () => {
-    const [originalTerms, setOriginalTerms] = useState();
+    const [originalTerms, setOriginalTerms] = useState<string[]>([]);
 
-    const [terms, setTerms] = useState([]);
+    const [terms, setTerms] = useState<string[]>([]);
 
-    const [termsStatus, setTermsStatus] = useState([]);
+    const [termsStatus, setTermsStatus] = useState<TermsStatus[]>([]);
 
-    const [termSelected, setTermSelected] = useState("");
+    const [termSelected, setTermSelected] = useState<string>("");
 
-    const [indexTermSelected, setIndexTermSelected] = useState("");
+    const [indexTermSelected, setIndexTermSelected] = useState<number>(0);
 
-    const [isTermCorrect, setIsTermCorrect] = useState(true);
+    const [isTermCorrect, setIsTermCorrect] = useState<boolean>(true);
 
-    const [countTermCorrect, setCountTermCorrect] = useState(0);
+    const [countTermCorrect, setCountTermCorrect] = useState<number>(0);
 
-    const [countTermIncorrect, setCountTermIncorrect] = useState(0);
+    const [countTermIncorrect, setCountTermIncorrect] = useState<number>(0);
 
-    const [wpm, setWpm] = useState(null);
+    const [wpm, setWpm] = useState<number | null>(null);
 
-    const setFalseTermCorrect = () => setIsTermCorrect(false);
+    const setFalseTermCorrect: () => void = () => setIsTermCorrect(false);
 
-    const setTrueTermCorrect = () => setIsTermCorrect(true);
+    const setTrueTermCorrect: () => void = () => setIsTermCorrect(true);
 
-    const incCountTermCorrect = () => setCountTermCorrect((prevCount) => prevCount + 1);
+    const incCountTermCorrect: () => void = () => setCountTermCorrect((prevCount) => prevCount + 1);
 
-    const incCountTermIncorrect = () => setCountTermIncorrect((prevCount) => prevCount + 1);
+    const incCountTermIncorrect: () => void = () => setCountTermIncorrect((prevCount) => prevCount + 1);
 
-    const getFile = async (url) => {
-        let fileContent = await fetch(url);
+    const getFile = async (url: string): Promise<string> => {
+        let fileContent: any | Array<string> = await fetch(url);
         fileContent = await fileContent.text();
         return fileContent;
     };
 
-    const reset = () => {
+    const reset = (): void => {
         randomizeTerms();
         setTermsStatus([]);
         setTermSelected("");
-        setIndexTermSelected("");
+        setIndexTermSelected(0);
         setCountTermCorrect(0);
         setCountTermIncorrect(0);
         setWpm(null);
     };
 
-    const randomizeTerms = () => {
-        setTerms(getShuffledArr(terms));
-    };
+    const randomizeTerms: () => void = () => setTerms(getShuffledArr(terms));
 
-    const nextTerm = () => {
+    const nextTerm = (): void => {
         setTermsStatus((prev) => {
             if (prev.length === 0) {
                 return [
@@ -74,17 +79,17 @@ const useTerms = () => {
         setIndexTermSelected((prevState) => prevState + 1);
     };
 
-    const getCountChar = (arr) => {
-        let res = 0;
+    const getCountChar = (arr: TermsStatus[]): number => {
+        let res: number = 0;
         for (let i = 0; i < arr.length; i++) {
             res += arr[i].length;
         }
         return res;
     };
 
-    const calculateWpm = (terms) => {
-        const countCharTrue = getCountChar(terms.filter((term) => term.status));
-        const resWpm = countCharTrue / 5;
+    const calculateWpm = (terms: TermsStatus[]): void => {
+        const countCharTrue: number = getCountChar(terms.filter((term) => term.status));
+        const resWpm: number = countCharTrue / 5;
         setWpm(resWpm);
     };
 

@@ -6,7 +6,7 @@ import useTerms from "../../hooks/useTerms";
 // Library
 import Countdown from "react-countdown";
 
-const Main = () => {
+const Main: React.FC = () => {
     const {
         terms,
         termSelected,
@@ -24,24 +24,33 @@ const Main = () => {
         calculateWpm,
         wpm,
     } = useTerms();
+    useTerms();
 
-    const [inputValue, setInputValue] = useState("");
+    const [inputValue, setInputValue] = useState<string>("");
 
-    const [scrollPos, setScrollPos] = useState(10);
+    const [scrollPos, setScrollPos] = useState<number>(10);
 
-    const [yPosTermSelected, setYPosTermSelected] = useState("");
+    const [yPosTermSelected, setYPosTermSelected] = useState<number | null>(null);
 
-    const [isYPosChanged, setIsYPosChanged] = useState(false);
+    const [isYPosChanged, setIsYPosChanged] = useState<boolean>(false);
 
-    const [dateNow, setDateNow] = useState(null);
+    const [dateNow, setDateNow] = useState<number | string>("");
 
-    const [isStart, setIsStart] = useState(false);
+    const [isStart, setIsStart] = useState<boolean>(false);
 
-    const [testCompleted, setTestCompleted] = useState(false);
+    const [testCompleted, setTestCompleted] = useState<boolean>(false);
 
-    const [IsReset, setIsReset] = useState(false);
+    const [IsReset, setIsReset] = useState<boolean>(false);
 
-    const handleChange = (value) => {
+    const checkTermCorrect = (term: string, inputTerm: string): boolean => {
+        const customRegExp = new RegExp(`^${inputTerm}`, "gi");
+        if (customRegExp.test(term)) {
+            return true;
+        }
+        return false;
+    };
+
+    const handleChange = (value: string): void => {
         if (!isStart) {
             return;
         } else {
@@ -60,7 +69,7 @@ const Main = () => {
         }
     };
 
-    const handleKeyUp = (e) => {
+    const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>): void => {
         if (!isStart) {
             return;
         } else {
@@ -83,41 +92,31 @@ const Main = () => {
         }
     };
 
-    const checkTermCorrect = (term, inputTerm) => {
-        const customRegExp = new RegExp(`^${inputTerm}`, "gi");
-        if (customRegExp.test(term)) {
-            return true;
-        }
-        return false;
-    };
-
-    const handleClickStart = () => {
-        document.getElementById("input").focus();
+    const handleClickStart = (): void => {
+        document.getElementById("input")!.focus();
         setIsStart(true);
         setDateNow(Date.now() + 60000);
         setIsReset(false);
     };
 
-    const handleCountdownComplete = () => {
+    const handleCountdownComplete = (): void => {
         setIsStart(false);
         setTestCompleted(true);
         calculateWpm(termsStatus);
     };
 
-    const handleClickReset = () => {
+    const handleClickReset = (): void => {
         reset();
         setInputValue("");
         setIsReset(true);
         setTestCompleted(false);
         setTrueTermCorrect();
     };
-
     /**
      * @abstract to be attention to implement auto sroll
      */
-
-    const handleScroll = () => {
-        document.getElementById("term-box").scrollTo(scrollPos - scrollPos, scrollPos);
+    const handleScroll = (): void => {
+        document.getElementById("term-box")!.scrollTo(scrollPos - scrollPos, scrollPos);
         setScrollPos((prev) => prev + 30);
     };
 
@@ -129,7 +128,7 @@ const Main = () => {
                     className="border-2 p-2 text-2xl w-full"
                     value={inputValue}
                     onChange={(e) => handleChange(e.target.value)}
-                    onKeyUp={handleKeyUp}
+                    onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => handleKeyUp(e)}
                     autoComplete="off"
                 />
             </div>
